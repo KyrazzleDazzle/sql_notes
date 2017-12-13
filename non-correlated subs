@@ -1,0 +1,16 @@
+# This returns the average distance of all flights for each day of the week for each month. 
+# This is done by using a subquery, naming that subquery 'a,' and making selections from 'a.'
+
+SELECT a.dep_month,
+			a.dep_day_of_week,
+      AVG(a.flight_distance) AS average_distance
+FROM (      # start of subquery
+	SELECT dep_month,
+		dep_day_of_week,
+  	dep_date,
+  	SUM(distance) as flight_distance
+	 FROM flights
+  GROUP BY 1,2,3
+  ) a       # end of subquery
+GROUP BY 1,2
+ORDER BY 1,2;
